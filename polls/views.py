@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 
-from .models import Question
+from .models import Question, Choice
+from django.urls import reverse
 
 # Create your views here.
 def index(request):
-    last_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = { 'last_question_list': last_question_list }
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    context = { 'latest_question_list': latest_question_list }
     return render(request, 'polls/index.html', context)
 
 def detail(request, question_id):
